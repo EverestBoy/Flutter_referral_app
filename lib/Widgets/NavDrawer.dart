@@ -8,11 +8,26 @@ import './NavTopBottomWidget/mainNavDrawerBase.dart';
 
 
 class NavDrawer extends StatefulWidget {
+  String name;
+  String image;
+  NavDrawer(String name, String image){
+    this.name = name;
+    this.image = image;
+  }
   @override
-  _NavDrawerState createState() => _NavDrawerState();
+  _NavDrawerState createState() => _NavDrawerState(name, image);
+  
 }
 
 class _NavDrawerState extends State<NavDrawer> {
+
+  String name;
+  String image;
+  _NavDrawerState(String name, String image){
+    this.name = name;
+    this.image = image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +35,7 @@ class _NavDrawerState extends State<NavDrawer> {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: <Widget>[
-          mainNavDrawerHeader(),
+          mainNavDrawerHeader(name, image),
           MainNavDrawerBase()
         ],
       ),

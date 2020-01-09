@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+      ),
       home: Scaffold(
         // appBar: AppBar(
         //   title: Text('Welcome to Flutter'),

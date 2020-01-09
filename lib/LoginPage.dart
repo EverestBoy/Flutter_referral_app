@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'Activities/MainActivity.dart';
-
-
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import './RestRequest/tokenLogin.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import './RestRequest/emailLogin.dart';
+
+import 'package:http/http.dart' as http;
+
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import 'RestRequest/emailLogin.dart';
+
 
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +32,49 @@ class _LoginPageState extends State<LoginPage> {
   TextStyle style = new TextStyle(fontSize: 20.0);
 
   TextEditingController _emailInputController = TextEditingController();
+  TextEditingController _passwordInputController = TextEditingController();
   String _emailText = ""; 
 
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            
+            padding: EdgeInsets.all(16),
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(backgroundColor: Colors.orange,),
+                new Text("     Authenticating", style: new TextStyle(fontSize: 18.0),),
+              ],
+            ),
+          )
+        );
+      },
+    );
+  // new Future.delayed(new Duration(seconds: 3), () {
+  //   Navigator.pop(context); //pop dialog
+  //   _login();
+  // });
+}
+
   _loginClicked(BuildContext context){
+    _onLoading();
+    FocusScope.of(context).requestFocus(FocusNode());
+    print("Input email: "+_emailInputController.text+"\npassword: "+_passwordInputController.text);
+    String sendJson = '{"email": "'+_emailInputController.text+'", "password": "'+_passwordInputController.text+'"}';
+    PostService postService = new PostService();
+    postService.jsonBody = sendJson;
+    // Test test = new Test();
+    // print(test.getText("dslfkj"));
+    postService.contextLogin = context;
+    var postResponse = postService.getPosts();
+    print("Response is "+postResponse.toString());
+
     // final scaffold = Scaffold.of(context);
     // scaffold.showSnackBar(
     //   SnackBar(
@@ -27,21 +83,24 @@ class _LoginPageState extends State<LoginPage> {
     //         label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
     //   ),
     // );
-    setState(() {
-      _emailText = _emailInputController.text;
-      Toast.show("Input email : $_emailText", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
-    });
-    var data = { 'email' : 'John', 'lastName' : 'Doe' };
+    // setState(() {
+    //   _emailText = _emailInputController.text;
+    //   Toast.show("Input email : $_emailText", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+    // });
+    // var data = { 'email' : 'John', 'lastName' : 'Doe' };
 
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => MainActivity()
-    ));
-
+    
    
   }
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+ 
+       statusBarColor: Color(0xFFe36b17),
+       
+    ));
 
     final emailField = new TextField(
       controller: _emailInputController,
@@ -55,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
 
     );
     final passwordField = new TextField(
+      controller: _passwordInputController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -80,6 +140,16 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             );
+  Future<Post> createPost(String url, {Map body}) async {
+    return http.post(url, body: body).then((http.Response response) {
+      final int statusCode = response.statusCode;
+  
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw new Exception("Error while fetching data");
+      }
+      return Post.fromJson(json.decode(response.body));
+    });
+  }
     
 
     return Scaffold(

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Activities/ReferalActivity/AllReferrals.dart';
 
 class MainActivityBody extends StatefulWidget {
   @override
@@ -22,8 +24,11 @@ class _MainActivityBodyState extends State<MainActivityBody> {
                 height: 50.0,
                 padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () {
+                  Navigator.push(context, CupertinoPageRoute(
+                    builder: (context) => AllReferrals()
+                  ));
                 },
-                child: Text("REFERRALS",
+                child: Text("Referrals",
                     textAlign: TextAlign.center,
                     style: style.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
@@ -38,7 +43,7 @@ class _MainActivityBodyState extends State<MainActivityBody> {
                 padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () {
                 },
-                child: Text("APPROVED",
+                child: Text("Approved",
                     textAlign: TextAlign.center,
                     style: style.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
@@ -53,7 +58,7 @@ class _MainActivityBodyState extends State<MainActivityBody> {
                 padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () {
                 },
-                child: Text("PENDING",
+                child: Text("Pendings",
                     textAlign: TextAlign.center,
                     style: style.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
@@ -68,7 +73,7 @@ class _MainActivityBodyState extends State<MainActivityBody> {
                 padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () {
                 },
-                child: Text("REJECTED",
+                child: Text("Rejected",
                     textAlign: TextAlign.center,
                     style: style.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
@@ -81,12 +86,12 @@ class _MainActivityBodyState extends State<MainActivityBody> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 64.0,),
+              SizedBox(height: 0.0,),
               Text("Invite your friend\nand earn money", textAlign: TextAlign.center, 
                 style: new TextStyle(fontSize: 20.0),
               ),
               
-              SizedBox(height: 150.0, child: Image.asset('assets/main_back.png'),),
+              SizedBox(height: 200.0, child: Image.asset('assets/main_back.png'),),
               
               Container(
                 padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
@@ -111,13 +116,13 @@ class _MainActivityBodyState extends State<MainActivityBody> {
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                          child: referralButton,
+                          child: approvedButton,
                         ),
                       ),
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-                          child: pendingButton,
+                          child: rejectedButton,
                         ),
                       ),
                     ])

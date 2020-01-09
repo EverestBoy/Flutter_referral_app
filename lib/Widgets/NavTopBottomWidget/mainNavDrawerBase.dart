@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../Activities/ReferalActivity/AllReferrals.dart';
 
 class MainNavDrawerBase extends StatefulWidget {
   @override
@@ -24,6 +26,11 @@ class _MainNavDrawerBaseState extends State<MainNavDrawerBase> {
           leading: Icon(Icons.event),
           title: Text('Referrals'),
           onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, CupertinoPageRoute(
+              
+              builder: (context) => AllReferrals()
+            ));
           },
         ),
         ListTile(
