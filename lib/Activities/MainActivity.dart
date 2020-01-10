@@ -72,7 +72,7 @@ class _MainActivityState extends State<MainActivity> {
               
               Container(
                 color: Color(0xffe37528),
-                height: 60,
+                height: 56.5,
                 width: double.infinity,
                 child: Stack(
                   children: <Widget>[
@@ -98,7 +98,7 @@ class _MainActivityState extends State<MainActivity> {
                                 )
                             ) 
                     ),
-                    Center(child: Text("Referrals", style: new TextStyle(fontSize: 20.0, color: Colors.white),),),
+                    Center(child: SizedBox(child: Image.asset("assets/dms.png") , height: 35,)),
                     Container(alignment: FractionalOffset.centerRight,
                       child:  GestureDetector(
                                 onTap: (){

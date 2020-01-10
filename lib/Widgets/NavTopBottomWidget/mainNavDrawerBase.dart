@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Activities/ReferalActivity/AllReferrals.dart';
+import '../../Activities/MoreActivity/AccountActivity.dart';
 
 class MainNavDrawerBase extends StatefulWidget {
   @override
@@ -13,12 +14,18 @@ class _MainNavDrawerBaseState extends State<MainNavDrawerBase> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Container(
       child: Column(children: <Widget>[
         ListTile(
           leading: Icon(Icons.account_balance),
           title: Text('My Account',),
-          onTap: () {
+          onTap: () async {
+              Navigator.pop(context);
+              // await new Future.delayed(const Duration(seconds: 3));
+              Navigator.push(context, CupertinoPageRoute(
+                builder: (context) => AccountActivity()
+              ));
             },
           ),
         Divider(),

@@ -93,6 +93,8 @@ class _LoginPageState extends State<LoginPage> {
    
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
 
@@ -102,28 +104,40 @@ class _LoginPageState extends State<LoginPage> {
        
     ));
 
-    final emailField = new TextField(
+    final emailField = TextFormField(
       controller: _emailInputController,
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(16.0),
-        hintText: "Email",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))
-      ),
-
-    );
-    final passwordField = new TextField(
-      controller: _passwordInputController,
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(16.0),
-        hintText: "Password",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))
-      ),
-
-    );
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  hintText: "Enter your email"
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  String email = value.substring(0);
+                  bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+                  if(!emailValid){
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              );
+    final passwordField = TextFormField(
+                controller: _passwordInputController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  hintText: "Enter your password"
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  String password = value.substring(0);
+                  return null;
+                },
+              );
     final loginButton = Material(
               elevation: 5.0,
               borderRadius: BorderRadius.circular(30.0),
@@ -132,7 +146,16 @@ class _LoginPageState extends State<LoginPage> {
                 minWidth: 150.0,
                 padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 onPressed: () {
-                  _loginClicked(context);
+                  
+                  if (_formKey.currentState.validate()) {
+                    _loginClicked(context);
+                    // If the form is valid, display a snackbar. In the real world,
+                    // you'd often call a server or save the information in a database.
+
+                    
+                  }
+
+                  
                 },
                 child: Text("Login",
                     textAlign: TextAlign.center,
@@ -162,10 +185,14 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: Container(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+          child: Form(
+            key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              
+              SizedBox(height: 32,),
               emailField,
               SizedBox(height: 16.0,),
               passwordField,
@@ -180,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ],
-          ),
+          )),
         )
       ),
       

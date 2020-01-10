@@ -60,7 +60,7 @@ class PostService {
       // prefs.setString("phone", user.phone);
       // prefs.setString("email", user.email);
 
-      print("Image is "+user.image);
+      // print("Image is "+user.image);
       Navigator.pushReplacement(context, CupertinoPageRoute(
         builder: (context) => MainActivity(),
       ));
